@@ -1,72 +1,165 @@
 
 var stackApi = (function(){
 	var key = "iC4HQbr5rg0JKVxKI62rWA((";
-	var baseUrl = "https://api.stackexchange.com/2.2/search?key="+key+"&site=stackoverflow&order=desc&sort=activity&filter=default";
+	var baseUrl = "https://api.stackexchange.com/2.2";
+	var searchSuffix = "/search?key="+key+"&filter=default";
+	var answerSuffix = "/questions/QID/answers?";
+	var genericSuffix = "site=stackoverflow&order=desc&sort=activity";
 
+	/**
+	 * Question search by term
+	 */
 	function _search(query, callback) {
-		var url = baseUrl + '&tagged=' + query;
-		// $.get(url).success(callback);
-		// doing some debugging
-		callback({"items":[{"tags":["node.js","socket.io","rabbitmq"],"owner":{"reputation":2197,"user_id":107945,"user_type":"registered","accept_rate":90,"profile_image":"https://www.gravatar.com/avatar/f6c326d7075039abf8fe625c2ffa41ec?s=128&d=identicon&r=PG","display_name":"Kelly","link":"http://stackoverflow.com/users/107945/kelly"},"is_answered":false,"view_count":3,"answer_count":0,"score":0,"last_activity_date":1423186849,"creation_date":1423186849,"question_id":28357240,"link":"http://stackoverflow.com/questions/28357240/node-js-with-socket-io-on-multiple-pages","title":"Node.js with Socket.io on multiple pages?"},{"tags":["angularjs","node.js","authentication"],"owner":{"reputation":159,"user_id":2981600,"user_type":"registered","accept_rate":56,"profile_image":"https://www.gravatar.com/avatar/29a5ddb44f1b4156fea5db74720026fd?s=128&d=identicon&r=PG","display_name":"user137717","link":"http://stackoverflow.com/users/2981600/user137717"},"is_answered":false,"view_count":4,"answer_count":1,"score":0,"last_activity_date":1423185885,"creation_date":1423185075,"question_id":28356987,"link":"http://stackoverflow.com/questions/28356987/how-to-generate-a-jwt-and-get-it-back-to-my-app-angular-node-express","title":"How to generate a JWT and get it back to my app Angular, Node, Express"},{"tags":["node.js","mongodb","mongoose"],"owner":{"reputation":65,"user_id":2865156,"user_type":"registered","accept_rate":67,"profile_image":"https://www.gravatar.com/avatar/ac1fdc9450c966198566ee25083fa033?s=128&d=identicon&r=PG&f=1","display_name":"user2865156","link":"http://stackoverflow.com/users/2865156/user2865156"},"is_answered":false,"view_count":6,"answer_count":1,"score":0,"last_activity_date":1423184900,"creation_date":1423182558,"question_id":28356610,"link":"http://stackoverflow.com/questions/28356610/how-to-remove-ttl-form-mongodb-collection","title":"How to remove TTL form MongoDB collection?"},{"tags":["node.js","bower","browserify","commonjs"],"owner":{"reputation":369,"user_id":3709775,"user_type":"registered","accept_rate":90,"profile_image":"http://i.stack.imgur.com/Tz5sH.png?s=128&g=1","display_name":"steven iseki","link":"http://stackoverflow.com/users/3709775/steven-iseki"},"is_answered":false,"view_count":2,"answer_count":0,"score":0,"last_activity_date":1423184743,"creation_date":1423184743,"question_id":28356934,"link":"http://stackoverflow.com/questions/28356934/would-bower-only-be-useful-for-css-if-using-browserify-and-node-js-commonjs","title":"Would bower only be useful for css if using browserify and node.js commonJs"},{"tags":["javascript","node.js","garbage-collection"],"owner":{"reputation":1,"user_id":1866814,"user_type":"registered","profile_image":"https://www.gravatar.com/avatar/8493d54953c44a4da64706f40062d2e5?s=128&d=identicon&r=PG","display_name":"bwalk","link":"http://stackoverflow.com/users/1866814/bwalk"},"is_answered":false,"view_count":26,"answer_count":0,"score":0,"last_activity_date":1423184629,"creation_date":1423118807,"last_edit_date":1423184629,"question_id":28337766,"link":"http://stackoverflow.com/questions/28337766/node-memory-usage-with-http-requests","title":"Node memory usage with HTTP requests"},{"tags":["javascript","node.js","nginx","static","reactjs"],"owner":{"reputation":302,"user_id":2048177,"user_type":"registered","accept_rate":25,"profile_image":"https://www.gravatar.com/avatar/69af577a9acb8842b19023ce5b171ec7?s=128&d=identicon&r=PG","display_name":"Blaine Hatab","link":"http://stackoverflow.com/users/2048177/blaine-hatab"},"is_answered":true,"view_count":448,"answer_count":2,"score":3,"last_activity_date":1423183976,"creation_date":1410401306,"question_id":25777931,"link":"http://stackoverflow.com/questions/25777931/server-rendering-react-js-on-a-static-website","title":"Server rendering React js on a static website"},{"tags":["node.js","amazon-web-services","amazon-s3"],"owner":{"reputation":560,"user_id":1210614,"user_type":"registered","accept_rate":87,"profile_image":"https://www.gravatar.com/avatar/1f685681e2d4a352cf33235028084258?s=128&d=identicon&r=PG","display_name":"Jordan","link":"http://stackoverflow.com/users/1210614/jordan"},"is_answered":false,"view_count":4,"answer_count":0,"score":0,"last_activity_date":1423183389,"creation_date":1423183389,"question_id":28356737,"link":"http://stackoverflow.com/questions/28356737/retrieving-images-from-amazon-s3-bucket","title":"Retrieving images from Amazon S3 bucket"},{"tags":["javascript","jquery","node.js","npm","package.json"],"owner":{"reputation":1105,"user_id":901239,"user_type":"registered","accept_rate":38,"profile_image":"https://www.gravatar.com/avatar/a2565210ce7ee1ce2378ea9f7f6d1d8d?s=128&d=identicon&r=PG","display_name":"matty-d","link":"http://stackoverflow.com/users/901239/matty-d"},"is_answered":false,"view_count":13,"answer_count":1,"score":4,"last_activity_date":1423183129,"creation_date":1423177373,"question_id":28355724,"link":"http://stackoverflow.com/questions/28355724/manage-file-dependencies-with-npm","title":"Manage file dependencies with NPM"},{"tags":["node.js","angularjs","mongoose"],"owner":{"reputation":6,"user_id":3672726,"user_type":"registered","profile_image":"http://graph.facebook.com/802296767/picture?type=large","display_name":"user3672726","link":"http://stackoverflow.com/users/3672726/user3672726"},"is_answered":false,"view_count":57,"answer_count":1,"score":1,"last_activity_date":1423182627,"creation_date":1405511696,"last_edit_date":1405515374,"question_id":24780158,"link":"http://stackoverflow.com/questions/24780158/i-want-to-display-some-query-mongoose-result-data-using-angular-on-an-html-page","title":"I want to display some query mongoose result data using Angular on an html page"},{"tags":["javascript","node.js","npm","gulp","reactjs"],"owner":{"reputation":369,"user_id":3709775,"user_type":"registered","accept_rate":90,"profile_image":"http://i.stack.imgur.com/Tz5sH.png?s=128&g=1","display_name":"steven iseki","link":"http://stackoverflow.com/users/3709775/steven-iseki"},"is_answered":false,"view_count":4,"answer_count":0,"score":0,"last_activity_date":1423182618,"creation_date":1423182618,"question_id":28356623,"link":"http://stackoverflow.com/questions/28356623/when-exporting-reactjs-components-as-node-modules-to-npm-do-i-include-jsx-or-js","title":"When exporting reactjs components as node modules to npm, do I include jsx or js"},{"tags":["javascript","angularjs","node.js","socket.io","angularjs-ng-repeat"],"owner":{"reputation":35,"user_id":3264320,"user_type":"registered","accept_rate":90,"profile_image":"http://i.stack.imgur.com/KTSCl.jpg?s=128&g=1","display_name":"Les Paul","link":"http://stackoverflow.com/users/3264320/les-paul"},"is_answered":true,"view_count":22,"accepted_answer_id":27201341,"answer_count":2,"score":0,"last_activity_date":1423182220,"creation_date":1417187240,"last_edit_date":1423182220,"question_id":27191438,"link":"http://stackoverflow.com/questions/27191438/angularjs-omitting-user-from-an-unordered-list","title":"AngularJS - Omitting user from an unordered list"},{"tags":["node.js","google-analytics","reactjs","google-tag-manager","webpack"],"owner":{"reputation":31505,"user_id":17744,"user_type":"registered","accept_rate":75,"profile_image":"http://i.stack.imgur.com/T1WbE.png?s=128&g=1","display_name":"Micah","link":"http://stackoverflow.com/users/17744/micah"},"is_answered":false,"view_count":8,"answer_count":0,"score":0,"last_activity_date":1423181660,"creation_date":1423180836,"last_edit_date":1423181660,"question_id":28356322,"link":"http://stackoverflow.com/questions/28356322/google-tag-manager-hangs-on-xhr-ready-state-changed","title":"Google Tag Manager hangs on XHR Ready State Changed"},{"tags":["node.js"],"owner":{"reputation":303,"user_id":975033,"user_type":"registered","accept_rate":60,"profile_image":"https://www.gravatar.com/avatar/ea23c4ed2a378bb90d16fb8498776d33?s=128&d=identicon&r=PG","display_name":"user975033","link":"http://stackoverflow.com/users/975033/user975033"},"is_answered":false,"view_count":219,"answer_count":1,"score":0,"last_activity_date":1423181413,"creation_date":1396235101,"question_id":22752990,"link":"http://stackoverflow.com/questions/22752990/getting-the-node-js-monitor-dashboard-project-to-work-externally","title":"Getting the node.js monitor-dashboard project to work externally"},{"tags":["javascript","node.js","websocket","socket.io","passport.js"],"owner":{"reputation":300,"user_id":2210274,"user_type":"registered","accept_rate":79,"profile_image":"https://www.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=128&d=identicon&r=PG","display_name":"user2210274","link":"http://stackoverflow.com/users/2210274/user2210274"},"is_answered":false,"view_count":12,"answer_count":0,"score":0,"last_activity_date":1423181395,"creation_date":1423172896,"last_edit_date":1423181395,"question_id":28354709,"link":"http://stackoverflow.com/questions/28354709/socket-io-https-connect-triggering-passport-js-deserializeuser","title":"socket.io https connect triggering passport.js deserializeUser"},{"tags":["javascript","angularjs","node.js","express","bootstrap-file-upload"],"owner":{"reputation":1753,"user_id":411449,"user_type":"registered","accept_rate":64,"profile_image":"https://www.gravatar.com/avatar/798ce620514f0e9eb191be9599855a7f?s=128&d=identicon&r=PG","display_name":"skip","link":"http://stackoverflow.com/users/411449/skip"},"is_answered":false,"view_count":178,"answer_count":1,"score":0,"last_activity_date":1423181187,"creation_date":1413951363,"question_id":26500242,"link":"http://stackoverflow.com/questions/26500242/how-to-get-image-data-created-by-bootstrap-file-input-plugin","title":"How to get image data created by Bootstrap File Input plugin"},{"tags":["node.js","http","stream"],"owner":{"reputation":307,"user_id":2942295,"user_type":"registered","accept_rate":66,"profile_image":"https://www.gravatar.com/avatar/cdc19f2d46b301a08083d293a1e89098?s=128&d=identicon&r=PG&f=1","display_name":"ZAR","link":"http://stackoverflow.com/users/2942295/zar"},"is_answered":true,"view_count":32,"accepted_answer_id":28356033,"answer_count":2,"score":1,"last_activity_date":1423180704,"creation_date":1423174422,"last_edit_date":1423179060,"question_id":28355079,"link":"http://stackoverflow.com/questions/28355079/how-do-node-js-streams-work","title":"How do Node.js Streams work?"},{"tags":["linux","node.js","raspberry-pi","raspbian","httpserver"],"owner":{"reputation":298,"user_id":3960404,"user_type":"registered","accept_rate":60,"profile_image":"http://i.stack.imgur.com/Q61PS.png?s=128&g=1","display_name":"meanIOstack","link":"http://stackoverflow.com/users/3960404/meaniostack"},"is_answered":false,"view_count":9,"answer_count":1,"score":0,"last_activity_date":1423180117,"creation_date":1423179703,"question_id":28356145,"link":"http://stackoverflow.com/questions/28356145/how-do-i-host-a-nodejs-http-web-server-on-a-raspberry-pi-or-any-linux-based-pc","title":"How do I host a NodeJS http web server on a raspberry PI/or any linux based PC"},{"tags":["mongodb","node.js","mongoose"],"owner":{"reputation":54,"user_id":951775,"user_type":"registered","accept_rate":67,"profile_image":"https://www.gravatar.com/avatar/c20348d447dc65b7543030764c1c1a23?s=128&d=identicon&r=PG","display_name":"Roxicus","link":"http://stackoverflow.com/users/951775/roxicus"},"is_answered":true,"view_count":2604,"accepted_answer_id":7500077,"answer_count":4,"score":3,"last_activity_date":1423179930,"creation_date":1316608932,"question_id":7499915,"link":"http://stackoverflow.com/questions/7499915/defining-a-mongoose-schema-on-the-fly","title":"Defining a Mongoose Schema on the fly"},{"tags":["angularjs","node.js","angularjs-directive","meanjs"],"owner":{"reputation":942,"user_id":787645,"user_type":"registered","accept_rate":70,"profile_image":"https://www.gravatar.com/avatar/3f8971c0e27e360d1b9b4fba7b820d2d?s=128&d=identicon&r=PG","display_name":"Finglish","link":"http://stackoverflow.com/users/787645/finglish"},"is_answered":true,"view_count":63,"accepted_answer_id":28356083,"answer_count":1,"score":2,"last_activity_date":1423179328,"creation_date":1416211520,"last_edit_date":1416212166,"question_id":26968072,"link":"http://stackoverflow.com/questions/26968072/how-to-secure-feature-for-authenticated-users-only-in-meanjs-when-using-angularj","title":"How to secure feature for authenticated users only in Meanjs when using angularjs"},{"tags":["node.js","npm","ionic-framework"],"owner":{"reputation":65,"user_id":617427,"user_type":"registered","accept_rate":44,"profile_image":"https://www.gravatar.com/avatar/4dc85e6fca505f844432739d9a33675a?s=128&d=identicon&r=PG","display_name":"Quoc Nguyen","link":"http://stackoverflow.com/users/617427/quoc-nguyen"},"is_answered":false,"view_count":57,"answer_count":2,"score":0,"last_activity_date":1423178985,"creation_date":1412859664,"question_id":26279094,"link":"http://stackoverflow.com/questions/26279094/npm-g-adds-package-to-c-usr-local-instead-of-c-users-user-appdata-roaming-n","title":"npm -g adds package to C:\\usr\\local instead of C:\\Users\\{User}\\AppData\\Roaming\\npm"},{"tags":["node.js","neo4j","cron","crontab"],"owner":{"reputation":1085,"user_id":712347,"user_type":"registered","accept_rate":42,"profile_image":"http://i.stack.imgur.com/fD27L.jpg?s=128&g=1","display_name":"deemeetree","link":"http://stackoverflow.com/users/712347/deemeetree"},"is_answered":false,"view_count":11,"answer_count":0,"score":0,"last_activity_date":1423178866,"creation_date":1423178866,"question_id":28356014,"link":"http://stackoverflow.com/questions/28356014/cron-not-running-while-the-commands-are-fine-why","title":"Cron not running while the commands are fine, why?"},{"tags":["javascript","node.js","gulp","gulp-sass","gulp-preprocess"],"owner":{"reputation":1803,"user_id":220272,"user_type":"registered","accept_rate":86,"profile_image":"https://www.gravatar.com/avatar/78a5b59fe5755c7088ba664e526e2464?s=128&d=identicon&r=PG","display_name":"dome","link":"http://stackoverflow.com/users/220272/dome"},"is_answered":false,"view_count":7,"answer_count":0,"score":0,"last_activity_date":1423178818,"creation_date":1423178818,"question_id":28356003,"link":"http://stackoverflow.com/questions/28356003/understand-gulp-pipe-order","title":"Understand Gulp pipe order"},{"tags":["node.js","postgresql","sequelize.js"],"owner":{"reputation":6,"user_id":3220044,"user_type":"registered","profile_image":"https://www.gravatar.com/avatar/3acb54c34070d5c569740e82159b5018?s=128&d=identicon&r=PG&f=1","display_name":"juvasquezg","link":"http://stackoverflow.com/users/3220044/juvasquezg"},"is_answered":false,"view_count":11,"answer_count":1,"score":1,"last_activity_date":1423178504,"creation_date":1423173287,"last_edit_date":1423173766,"question_id":28354810,"link":"http://stackoverflow.com/questions/28354810/sequelize-raw-query-by-daterange","title":"Sequelize, Raw Query by daterange"},{"tags":["javascript","node.js","angularjs","protractor"],"owner":{"reputation":21392,"user_id":277683,"user_type":"registered","accept_rate":72,"profile_image":"https://www.gravatar.com/avatar/c15311acd88ded73e20238c71adf253f?s=128&d=identicon&r=PG","display_name":"Konrad Garus","link":"http://stackoverflow.com/users/277683/konrad-garus"},"is_answered":true,"view_count":872,"answer_count":2,"score":1,"last_activity_date":1423178318,"creation_date":1389394458,"question_id":21055960,"link":"http://stackoverflow.com/questions/21055960/bare-http-calls-from-protractor-tests","title":"Bare HTTP calls from Protractor tests"},{"tags":["javascript","node.js","exception","memory-management","memory-leaks"],"owner":{"reputation":1920,"user_id":763074,"user_type":"registered","accept_rate":80,"profile_image":"https://www.gravatar.com/avatar/5b034d4806a2bed77c8d84b035d56e8e?s=128&d=identicon&r=PG","display_name":"Justin Warkentin","link":"http://stackoverflow.com/users/763074/justin-warkentin"},"is_answered":true,"view_count":1165,"accepted_answer_id":15874115,"answer_count":3,"score":15,"last_activity_date":1423177894,"creation_date":1365134819,"last_edit_date":1395270736,"question_id":15825752,"link":"http://stackoverflow.com/questions/15825752/why-would-an-exception-cause-resource-leaks-in-node-js","title":"Why would an exception cause resource leaks in Node.js?"},{"tags":["javascript","node.js","hapijs"],"owner":{"reputation":3,"user_id":2472119,"user_type":"registered","profile_image":"https://www.gravatar.com/avatar/50dc39f570ca6eb57132d24768f89d13?s=128&d=identicon&r=PG","display_name":"Art Taylor","link":"http://stackoverflow.com/users/2472119/art-taylor"},"is_answered":false,"view_count":9,"answer_count":0,"score":0,"last_activity_date":1423177719,"creation_date":1423156916,"last_edit_date":1423177719,"question_id":28350198,"link":"http://stackoverflow.com/questions/28350198/hapijs-typeerror-string-is-not-a-function-when-trying-to-render-a-view","title":"Hapijs TypeError: string is not a function when trying to render a view"},{"tags":["node.js","hapijs"],"owner":{"reputation":144,"user_id":1725624,"user_type":"registered","accept_rate":69,"profile_image":"https://www.gravatar.com/avatar/d7570ddb689c36327451ef3f40db98d3?s=128&d=identicon&r=PG","display_name":"Jdruwe","link":"http://stackoverflow.com/users/1725624/jdruwe"},"is_answered":false,"view_count":6,"answer_count":1,"score":0,"last_activity_date":1423177657,"creation_date":1423171303,"question_id":28354247,"link":"http://stackoverflow.com/questions/28354247/hapi-js-lab-testing-issue","title":"Hapi.js lab testing issue"},{"tags":["node.js"],"owner":{"reputation":1,"user_id":1856750,"user_type":"registered","profile_image":"https://www.gravatar.com/avatar/538d38187e8713a0cb2b04098bbd5a33?s=128&d=identicon&r=PG","display_name":"user1856750","link":"http://stackoverflow.com/users/1856750/user1856750"},"is_answered":false,"view_count":4,"answer_count":0,"score":0,"last_activity_date":1423177299,"creation_date":1423177299,"question_id":28355698,"link":"http://stackoverflow.com/questions/28355698/nodejs-live-graphing-stream","title":"NodeJS Live Graphing Stream"},{"tags":["node.js","mongodb","breeze"],"owner":{"reputation":11,"user_id":4174843,"user_type":"registered","profile_image":"https://www.gravatar.com/avatar/8dca7fff65566ef13dcaf004770946c6?s=128&d=identicon&r=PG&f=1","display_name":"Alex","link":"http://stackoverflow.com/users/4174843/alex"},"is_answered":false,"view_count":24,"answer_count":1,"score":0,"last_activity_date":1423177114,"creation_date":1422798966,"question_id":28263456,"link":"http://stackoverflow.com/questions/28263456/breeze-js-node-js-mongoose","title":"Breeze.js Node.js mongoose?"},{"tags":["node.js"],"owner":{"reputation":394,"user_id":191998,"user_type":"registered","accept_rate":57,"profile_image":"https://www.gravatar.com/avatar/c4ddae78950eb97fe435d6e6f8587ddc?s=128&d=identicon&r=PG","display_name":"Ronny vdb","link":"http://stackoverflow.com/users/191998/ronny-vdb"},"is_answered":false,"view_count":12,"answer_count":0,"score":0,"last_activity_date":1423176851,"creation_date":1423171838,"last_edit_date":1423176851,"question_id":28354417,"link":"http://stackoverflow.com/questions/28354417/how-to-check-if-files-exist-on-different-drive-with-nodejs","title":"How to check if files exist on different drive with Nodejs"}],"has_more":true,"quota_max":10000,"quota_remaining":9985});
+		var url = baseUrl + searchSuffix + '&tagged=' + query + '&' + genericSuffix;
+		$.get(url).success(callback);
+	}
+
+	/**
+	 * Get all answers to a question id
+	 */
+	function _getAnswers(qid, callback) {
+		// The answerSuffix contains a placeholder that we swap out
+		var url = baseUrl + answerSuffix.replace('QID', qid) + genericSuffix;
+		$.get(url).success(callback);
 	}
 
 	return {
-		search: _search
+		search: _search,
+		getAnswers: _getAnswers
 	};
 })();
 
 var questionList = (function(){
 	var $questionList = $('.js-questions');
 
+	/**
+	 * Any handlers that need to be kicked off
+	 */
+	function _init(options) {
+		// When a user clicks on a question header we intercept
+		// we need to use 'on' because the questions are dynamically 
+		// added to the page
+		$('body').on('click', '.js-question-link', function(e){
+			e.preventDefault();
+			var qid = $(this).data('qid');
+			var $questionContainer = $(this).parents('.question');
 
-	function _refresh(queryData) {
+			options.questionClick(qid, $questionContainer);
+		});
+	}
+
+	/**
+	 * Processes answers into html and puts it in the correct spot
+	 * of the question container
+	 */
+	function _insertAnswers($questionContainer, answers) {
+		var answersHtml = '<div class="answers">';
+		answersHtml += '<h4>Answers</h4>';
+
+		if (answers.length) {
+			answersHtml += '<ul class="answers-list">'
+			$.each(answers, function(i, answer) {
+				answersHtml += '<li>';
+					answersHtml += '<img width="20px" src="'+answer.owner.profile_image+'">';
+					answersHtml += answer.owner.display_name
+					if (answer.is_accepted) {
+						answersHtml += '<i class="glyphicon glyphicon-ok-sign"></i>';
+					}
+				answersHtml += '</li>';
+			});
+			answersHtml += '</ul>';
+		} else {
+			answersHtml += '<p>no answers submitted</p>';
+		}
+		answersHtml += '</div>';
+
+		// if answers was already fetched remove it
+		$questionContainer.find('.answers').remove();
+
+		// insert our new answers
+		$questionContainer.find('.question-body').prepend(answersHtml);
+	}
+
+	/**
+	 * Wrapper for any updates to query data
+	 */
+	function _refreshQuestions(queryData) {
+		_inserQuestions(queryData.items);
+	}
+
+	/**
+	 * Processes question items into an html template 
+	 * and appends it to it's container
+	 */
+	function _inserQuestions(items) {
 		var questionListHtml = '';
-		$.each(queryData.items, function(i,item){
 
-			questionListHtml += '<div class="col-sm-6">';
-				questionListHtml += '<div class="question">';
+		if (items.length) {
+			$.each(items, function(i,item){
 
-					questionListHtml += '<h3 class="question-title">';
-						questionListHtml += '<a href="#" class="js-question-link">'+item.title+'</a>';
-					questionListHtml += '</h3>';
+				questionListHtml += '<div class="col-sm-6">';
+					questionListHtml += '<div class="question">';
 
-					questionListHtml += '<div class="question-body">';
-						questionListHtml += '<ul class="list-inline">';
-							if (item.is_answered) {
-								questionListHtml += '<li><i class="glyphicon glyphicon-ok-sign"></i> Answered</li>';
-							}
-							questionListHtml += '<li><i class="glyphicon glyphicon-eye-open"></i> '+item.view_count+' Views</li>';
-							questionListHtml += '<li><i class="glyphicon glyphicon-retweet"></i> '+item.answer_count+' Answers</li>';
-						questionListHtml += '</ul>';
+						questionListHtml += '<h3 class="question-title">';
+							questionListHtml += '<a href="#" data-qid="'+item.question_id+'" class="js-question-link">'+item.title+'</a>';
+						questionListHtml += '</h3>';
 
-						questionListHtml += '<ul class="list-inline question-tags">';
-							questionListHtml += '<li>tags: </li>'
-							questionListHtml += '<li><span class="label label-info">'
-							questionListHtml += item.tags.join('</span></li><li><span class="label label-info">');
-							questionListHtml += '</span></li>';
-						questionListHtml += '</ul>';
+						questionListHtml += '<div class="question-body">';
+							questionListHtml += '<ul class="list-inline">';
+								if (item.is_answered) {
+									questionListHtml += '<li><i class="glyphicon glyphicon-ok-sign"></i> Answered</li>';
+								}
+								questionListHtml += '<li><i class="glyphicon glyphicon-eye-open"></i> '+item.view_count+' Views</li>';
+								questionListHtml += '<li><i class="glyphicon glyphicon-retweet"></i> '+item.answer_count+' Answers</li>';
+							questionListHtml += '</ul>';
+
+							questionListHtml += '<ul class="list-inline question-tags">';
+								questionListHtml += '<li>tags: </li>'
+								questionListHtml += '<li><span class="label label-info">'
+								questionListHtml += item.tags.join('</span></li><li><span class="label label-info">');
+								questionListHtml += '</span></li>';
+							questionListHtml += '</ul>';
+						questionListHtml += '</div>';
 					questionListHtml += '</div>';
 				questionListHtml += '</div>';
-			questionListHtml += '</div>';
-		});
+			});
+		} else {
+			questionListHtml = '<p>No results found for that search term, try again with something less specific</p>';
+		}
 
 		$questionList.html(questionListHtml);
 	}
 
 	return {
-		refresh: _refresh
+		init: _init,
+		refreshQuestions: _refreshQuestions,
+		insertAnswers: _insertAnswers
 	}
 })();
 
-// Fire it up
+// Connect all of the pieces
 $(function(){
+	questionList.init({
+		// Handler for when a question is clicked
+		questionClick: function(qid, $questionContainer) {
+
+			// Reach out to the api and get a list of answers
+			stackApi.getAnswers(qid, function(response) {
+
+				// Ask question list to append the answers
+				var answers = response.items;
+				questionList.insertAnswers($questionContainer, answers);
+			});
+		}
+	});
+
+	// Search form handler
 	$('.js-search-form').submit(function(e){
 		e.preventDefault();
 
+		// Reach out to the api with our query,
+		// and tell the questionList to refresh itself with this data
 		var query = $(this).find('[name=query]').val();
-		stackApi.search(query,function(queryResponse){
-			questionList.refresh(queryResponse);
-		});
-
+		stackApi.search(query, questionList.refreshQuestions);
 	});
 });

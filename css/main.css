@@ -1,5 +1,26 @@
+.question {
+	border-bottom: 2px solid #eee;
+}
 
+.answers-list {
+    padding: 0;
+    margin-bottom: 15px;
+    list-style: none;
+}
 
+.answers-list li {
+    margin: 0 0 4px 4px;
+}
+
+.answers-list img {
+    margin-right: 8px;
+    float: left;
+}
+
+.answers-list .glyphicon {
+	top: 2px;
+	margin-left: 4px;
+}
 
 
 
