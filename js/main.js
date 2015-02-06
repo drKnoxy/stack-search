@@ -19,8 +19,6 @@ var questionList = (function(){
 	var $questionList = $('.js-questions');
 
 
-
-
 	function _refresh(queryData) {
 		var questionListHtml = '';
 		$.each(queryData.items, function(i,item){
@@ -29,14 +27,14 @@ var questionList = (function(){
 				questionListHtml += '<div class="question">';
 
 					questionListHtml += '<h3 class="question-title">';
-						if (item.is_answered) {
-							questionListHtml += '<i class="glyphicon glyphicon-ok-sign pull-right"></i>';
-						}
 						questionListHtml += '<a href="#" class="js-question-link">'+item.title+'</a>';
 					questionListHtml += '</h3>';
 
 					questionListHtml += '<div class="question-body">';
 						questionListHtml += '<ul class="list-inline">';
+							if (item.is_answered) {
+								questionListHtml += '<li><i class="glyphicon glyphicon-ok-sign"></i> Answered</li>';
+							}
 							questionListHtml += '<li><i class="glyphicon glyphicon-eye-open"></i> '+item.view_count+' Views</li>';
 							questionListHtml += '<li><i class="glyphicon glyphicon-retweet"></i> '+item.answer_count+' Answers</li>';
 						questionListHtml += '</ul>';
