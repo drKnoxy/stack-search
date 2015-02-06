@@ -1,5 +1,6 @@
 .question {
-	border-bottom: 2px solid #eee;
+	border-top: 2px solid #eee;
+	margin-bottom: 30px;
 }
 
 .answers-list {

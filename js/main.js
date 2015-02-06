@@ -96,7 +96,6 @@ var questionList = (function(){
 
 		if (items.length) {
 			$.each(items, function(i,item){
-
 				questionListHtml += '<div class="col-sm-6">';
 					questionListHtml += '<div class="question">';
 
@@ -122,6 +121,12 @@ var questionList = (function(){
 						questionListHtml += '</div>';
 					questionListHtml += '</div>';
 				questionListHtml += '</div>';
+
+				// insert a clearfix after odd items
+				// makes things line up a little nicer
+				if ( (i+1) % 2 == 0) {
+					questionListHtml += '<div class="clearfix hidden-xs"></div>'
+				}
 			});
 		} else {
 			questionListHtml = '<p>No results found for that search term, try again with something less specific</p>';
